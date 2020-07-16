@@ -231,7 +231,7 @@ KEYTAR_OP_RESULT FindPassword(const std::string& service,
 
 Credentials getCredentialsForItem(CFDictionaryRef item) {
   CFStringRef service = (CFStringRef) CFDictionaryGetValue(item,
-                                                           kSecAttrService);
+                                                           kSecAttrServer);
   CFStringRef account = (CFStringRef) CFDictionaryGetValue(item,
                                                            kSecAttrAccount);
 
@@ -241,8 +241,8 @@ Credentials getCredentialsForItem(CFDictionaryRef item) {
     &kCFTypeDictionaryKeyCallBacks,
     &kCFTypeDictionaryValueCallBacks);
 
-  CFDictionaryAddValue(query, kSecAttrService, service);
-  CFDictionaryAddValue(query, kSecClass, kSecClassGenericPassword);
+  CFDictionaryAddValue(query, kSecAttrServer, service);
+  CFDictionaryAddValue(query, kSecClass, kSecClassInternetPassword);
   CFDictionaryAddValue(query, kSecMatchLimit, kSecMatchLimitOne);
   CFDictionaryAddValue(query, kSecReturnAttributes, kCFBooleanTrue);
   CFDictionaryAddValue(query, kSecReturnData, kCFBooleanTrue);
@@ -284,8 +284,8 @@ KEYTAR_OP_RESULT FindCredentials(const std::string& service,
     0,
     &kCFTypeDictionaryKeyCallBacks,
     &kCFTypeDictionaryValueCallBacks);
-  CFDictionaryAddValue(query, kSecClass, kSecClassGenericPassword);
-  CFDictionaryAddValue(query, kSecAttrService, serviceStr);
+  CFDictionaryAddValue(query, kSecClass, kSecClassInternetPassword);
+  CFDictionaryAddValue(query, kSecAttrServer, serviceStr);
   CFDictionaryAddValue(query, kSecMatchLimit, kSecMatchLimitAll);
   CFDictionaryAddValue(query, kSecReturnRef, kCFBooleanTrue);
   CFDictionaryAddValue(query, kSecReturnAttributes, kCFBooleanTrue);
